@@ -1,16 +1,20 @@
-# This is a sample Python script.
+# This Python file uses the following encoding: utf-8
+import sys
+from PySide2.QtWidgets import QApplication
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+# 添加的所需库文件
+from PyQt5 import QtCore, QtGui, QtWidgets
+# mainwindow.ui Python文件
+import mainwindow
 
+if __name__ == "__main__":
+    app = QApplication([])
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+    # 此处调用GUI的程序
+    widgets = QtWidgets.QMainWindow()
+    ui = mainwindow.Ui_MainWindow()
+    ui.setupUi(widgets)
+    widgets.show()
+    # 结束
 
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    sys.exit(app.exec_())
