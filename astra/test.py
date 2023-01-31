@@ -2,22 +2,37 @@ from openni import openni2
 import numpy as np
 import cv2
 
-
 def mousecallback(event, x, y, flags, param):
     if event == cv2.EVENT_LBUTTONDBLCLK:
         print(y, x, dpt[y, x])
+#输出鼠标指针的位置
 
 
 if __name__ == "__main__":
     openni2.initialize()
     dev = openni2.Device.open_any()
+    #设备型号
     print(dev.get_device_info())
+    #打印设备型号
     depth_stream = dev.create_depth_stream()
+    color_stream = dev.create_color_stream()
+    #创建深度流的通道
     dev.set_image_registration_mode(True)
+    #彩色和深度图对齐
     depth_stream.start()
-    cap = cv2.VideoCapture(0)
+    color_stream.start()
+    #开始录制深度图像
+    cap = cv2.VideoCapture(2)
+    #创建摄像头对象
+
     cv2.namedWindow('depth')
+    cv2.namedWindow('color')
+    #创建windows窗口名字为depth
+
     cv2.setMouseCallback('depth', mousecallback)
+
+    cv2.setMouseCallback('color', mousecallback)
+    #把鼠标事件定义depth窗口中
     while True:
 
         frame = depth_stream.read_frame()
@@ -37,14 +52,10 @@ if __name__ == "__main__":
         '假设我们想让深度摄像头6m距离内的深度被显示，>6m的与6m的颜色显示相同，那么alpha=255/(6*10^3)≈0.0425'
         dim_gray = cv2.convertScaleAbs(dpt, alpha=0.17)
         # 对深度图像进行一种图像的渲染，目前有11种渲染方式，大家可以逐一去试下
-        depth_colormap = cv2.applyColorMap(dim_gray, 1)  # 有0~11种渲染的模式
+        depth_colormap = cv2.applyColorMap(dim_gray, 2)  # 有0~11种渲染的模式
 
         cv2.imshow('depth', depth_colormap)
-
-        ret, frame = cap.read()
-        #cv2.imshow('color', frame)
-        #这里无法显示彩色图像因为使用的uvc摄像头，openni2不能看到彩色数据
-
+        cv2.imshow('color', color_stream)
 
         key = cv2.waitKey(1)
         if int(key) == ord('q'):
@@ -52,3 +63,4 @@ if __name__ == "__main__":
 
     depth_stream.stop()
     dev.close()
+
