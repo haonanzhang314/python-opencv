@@ -21,6 +21,8 @@ if __name__ == "__main__":
     #ir_stream = dev.create_ir_stream()
     #ir_stream.start()
 
+
+
     #深度窗口
     cv2.namedWindow('depth')
     #彩色窗口
@@ -82,10 +84,13 @@ if __name__ == "__main__":
         key = cv2.waitKey(30)
         if int(key) == ord('q'):
             break
+
         if int(key) == ord('r'):
+            capture_flag = 1
+        if capture_flag == 1:
             name = str(count).zfill(8)
             cv2.imwrite(base_path + 'img/' + name + ".jpg", depth_colormap)
-            # cv2.imwrite(base_path + 'img/' + name + ".jpg", cfqrame_data)
+            #cv2.imwrite(base_path + 'img/' + name + ".jpg", cframe_data)
             # cv2.imwrite(base_path + 'img/' + name + ".jpg", img)
             count = count + 1
 
