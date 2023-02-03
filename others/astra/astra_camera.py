@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
     capture_flag = 0
 
-    base_path = '../'
+    base_path = '../../'
 
     count = 1
     #设置视频的分辨率和长宽以及fps等等内容
