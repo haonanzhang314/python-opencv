@@ -293,9 +293,11 @@ class Retinaface(object):
         #---------------------------------------------------#
         #   计算scale，用于将获得的预测框转换成原图的高宽
         #---------------------------------------------------#
+        # shape【x】x的取值为：0—表示行数、1—表示列数  下面的对应x,y坐标
         scale = [
             np.shape(image)[1], np.shape(image)[0], np.shape(image)[1], np.shape(image)[0]
         ]
+        # 人脸上五个点的坐标
         scale_for_landmarks = [
             np.shape(image)[1], np.shape(image)[0], np.shape(image)[1], np.shape(image)[0],
             np.shape(image)[1], np.shape(image)[0], np.shape(image)[1], np.shape(image)[0],
@@ -303,7 +305,7 @@ class Retinaface(object):
         ]
 
         #---------------------------------------------------------#
-        #   letterbox_image可以给图像增加灰条，实现不失真的resize
+        #   先验框letterbox_image可以给图像增加灰条，实现不失真的resize
         #---------------------------------------------------------#
         if self.letterbox_image:
             image = letterbox_image(image, [self.retinaface_input_shape[1], self.retinaface_input_shape[0]])
@@ -327,6 +329,7 @@ class Retinaface(object):
             #---------------------------------------------------------#
             #   传入网络进行预测
             #---------------------------------------------------------#
+            # loc先验框的调整参数 conf置信度  landms人脸关键点的调整参数
             loc, conf, landms = self.net(image)
             #---------------------------------------------------#
             #   Retinaface网络的解码，最终我们会获得预测框
@@ -342,6 +345,7 @@ class Retinaface(object):
             #   对人脸检测结果进行堆叠
             #-----------------------------------------------------------#
             boxes_conf_landms = torch.cat([boxes, conf, landms], -1)
+            # 非极大值抑制
             boxes_conf_landms = non_max_suppression(boxes_conf_landms, self.confidence)
         
             #---------------------------------------------------#
