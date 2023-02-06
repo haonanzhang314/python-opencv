@@ -1,3 +1,12 @@
+import mysql.connector
+# 数据库账户密码
+mydb = mysql.connector.connect(
+    host="124.221.206.185",
+    user="face",
+    passwd="qwe123ASD",
+    database='face'
+)
+
 cfg_mnet = {
     'name'              : 'mobilenet0.25',
     'min_sizes'         : [[16, 32], [64, 128], [256, 512]],

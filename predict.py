@@ -11,8 +11,6 @@ if __name__ == "__main__":
     # astra为奥比中光astra深度相机
     mode = "astra"
 
-
-
     if mode == "astra":
         openni2.initialize()
 
@@ -25,7 +23,7 @@ if __name__ == "__main__":
         color_stream.start()
 
         fps = 0.0
-        while(True):
+        while (True):
 
             t1 = time.time()
 
@@ -40,10 +38,12 @@ if __name__ == "__main__":
             # 进行检测
             cframe_data = np.array(retinaface.detect_image(cframe_data))
 
-            fps = (fps + (1. / (time.time() - t1))) / 2
-            print("fps= %.2f" % (fps))
 
-            cframe_data = cv2.putText(cframe_data, "fps= %.2f" % (fps), (0, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+            fps = (fps + (1. / (time.time() - t1))) / 2
+            # print("fps= %.2f" % (fps))
+
+            cframe_data = cv2.putText(cframe_data, "fps= %.2f" % (fps), (0, 40), cv2.FONT_HERSHEY_SIMPLEX, 1,
+                                      (0, 255, 0), 2)
 
             cv2.imshow("video", cframe_data)
 
@@ -96,10 +96,3 @@ if __name__ == "__main__":
         capture.release()
 
         cv2.destroyAllWindows()
-
-
-
-
-
-
-
