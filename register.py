@@ -67,12 +67,18 @@ class Ui_MainWindow(object):
         self.pushButton.setObjectName("pushButton")
         self.gridLayout.addWidget(self.pushButton, 5, 3, 1, 1)
         self.horizontalLayout.addWidget(self.frame_2)
-        self.widget = QVideoWidget(self.centralwidget)
+
+        self.widget = QtWidgets.QWidget(self.centralwidget)
+        self.widget.setGeometry(QtCore.QRect(20, 50, 640, 480))
         self.widget.setObjectName("widget")
+
+
         self.video = QtWidgets.QLabel(self.widget)
-        self.video.setGeometry(QtCore.QRect(130, 130, 581, 480))
-        self.video.setMaximumSize(QtCore.QSize(640, 480))
+        self.video.setGeometry(QtCore.QRect(130, 130, 640, 480))
         self.video.setObjectName("video")
+
+
+
         self.horizontalLayout.addWidget(self.widget)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -96,4 +102,3 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "联系方式"))
         self.pushButton.setText(_translate("MainWindow", "确定"))
         self.video.setText(_translate("MainWindow", "TextLabel"))
-from PyQt5.QtMultimediaWidgets import QVideoWidget
