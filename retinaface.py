@@ -38,6 +38,7 @@ def cv2ImgAddText(img, label, left, top, textColor=(255, 255, 255)):
 #   一定要注意重新编码人脸。
 # --------------------------------------#
 class Retinaface(object):
+    name = 0
 
     _defaults = {
         # ----------------------------------------------------------------------#
@@ -428,15 +429,16 @@ class Retinaface(object):
                                                     tolerance=self.facenet_threhold)
 
 
-            name = "Unknown"
+            Retinaface.name = "Unknown"
             # -----------------------------------------------------#
             #   取出这个最近人脸的评分
             #   取出当前输入进来的人脸，最接近的已知人脸的序号
             # -----------------------------------------------------#
             best_match_index = np.argmin(face_distances)
             if matches[best_match_index]:
-                name = self.known_face_names[best_match_index]
-            face_names.append(name)
+                Retinaface.name = self.known_face_names[best_match_index]
+            face_names.append(Retinaface.name)
+
         # -----------------------------------------------#
         #   人脸特征比对-结束
         # -----------------------------------------------#
@@ -470,20 +472,6 @@ class Retinaface(object):
             #   如果不是必须，可以换成cv2只显示英文。
             # --------------------------------------------------------------#
             old_image = cv2ImgAddText(old_image, name, b[0] + 5, b[3] - 25)
-            # 输出数据库的内容
-            import mysql.connector
-
-            mydb = mysql.connector.connect(
-                host="124.221.206.185",
-                user="face",
-                passwd="qwe123ASD",
-                database='face'
-            )
-            mycursor = mydb.cursor()
-            mycursor.execute("select * from student where id = '%s'" % (name))
-
-            for x in mycursor:
-                print(x)
 
 
 

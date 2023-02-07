@@ -170,7 +170,7 @@
           <number>0</number>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="main_index">
           <layout class="QGridLayout" name="gridLayout">
@@ -249,7 +249,7 @@
             </widget>
            </item>
            <item row="0" column="1" rowspan="2">
-            <widget class="QFrame" name="index_video">
+            <widget class="QFrame" name="index_video_frame">
              <property name="maximumSize">
               <size>
                <width>640</width>
@@ -262,6 +262,19 @@
              <property name="frameShadow">
               <enum>QFrame::Raised</enum>
              </property>
+             <widget class="QLabel" name="index_video">
+              <property name="geometry">
+               <rect>
+                <x>80</x>
+                <y>90</y>
+                <width>481</width>
+                <height>331</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
             </widget>
            </item>
           </layout>
@@ -368,7 +381,7 @@
              <widget class="QLineEdit" name="register_input_work"/>
             </item>
             <item row="4" column="1">
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="register_pushButton">
               <property name="text">
                <string>确认</string>
               </property>
