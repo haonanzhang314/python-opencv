@@ -1,5 +1,8 @@
+import os
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
+from mysql.connector import cursor
+
 from mainwindow import Ui_MainWindow
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -30,13 +33,18 @@ class myMainWindow(Ui_MainWindow,QMainWindow):
         self.menu_index.clicked.connect(self.index_face)
         #用户注册页面槽函数
         self.register_pushButton.clicked.connect(self.save_information)
+        self.register_train_pushbuttoon.clicked.connect(self.train_model)
         self.register_video_pushbutton.clicked.connect(self.save_pic)
+        #信息管理槽函数
+        self.pushButton.clicked.connect(self.manage_delete)
+        self.pushButton_2.clicked.connect(self.manage_change)
         self.retinaface = Retinaface()
         openni2.initialize()
         self.dev = openni2.Device.open_any()
         self.color_stream = self.dev.create_color_stream()
         self.color_stream.start()
         self.painter = QPainter(self)
+
 
     def stack_index(self):
         self.stackedWidget.setCurrentIndex(0)
@@ -54,9 +62,20 @@ class myMainWindow(Ui_MainWindow,QMainWindow):
    #################人脸识别界面##########################
     def index_face(self):
         mycursor = config.mydb.cursor()
-        mycursor.execute("select * from student where id = '%s'" % (Retinaface.name))
-        for x in mycursor:
-            print(x)
+        try:
+            # 执行SQL语句
+            mycursor.execute("select * from student where id = '%s'" % (Retinaface.name))
+            # 获取所有记录列表
+            results = mycursor.fetchall()
+            for row in results:
+                self.index_input_id.setPlaceholderText(row[0])
+                self.index_input_name.setPlaceholderText(row[1])
+                self.index_input_work.setPlaceholderText(row[2])
+                self.index_input_tel.setPlaceholderText(row[3])
+                id = row[0]
+        except:
+            print("Error: unable to fetch data")
+
 
 
 
@@ -100,6 +119,44 @@ class myMainWindow(Ui_MainWindow,QMainWindow):
         print(name)
         cv2.imencode('.jpg', self.frame_data)[1].tofile('face_dataset/' + name + '_' + str(myMainWindow.i) + '.jpg')
         print(myMainWindow.i)
+    def train_model(self):
+        # 将所有人脸编码的结果放在一个列表中，得到的就是已知的所有人脸的特征列表，在之后获得的实时图片中的人脸都需要与已知的列表进行对比，就能知道谁是谁
+        '''
+        在更换facenet网络后一定要重新进行人脸编码，运行encoding.py。
+        '''
+        retinaface = Retinaface(1)
+
+        list_dir = os.listdir("face_dataset")
+        image_paths = []
+        names = []
+        for name in list_dir:
+            image_paths.append("face_dataset/" + name)
+            names.append(name.split("_")[0])
+
+        retinaface.encode_face_dataset(image_paths, names)
+
+        #############################################################
+        ##################### 信息管理 ###############################
+    def manage_delete(self):
+        mycursor = config.mydb.cursor()
+        id = self.manage_input_id.text()
+        mycursor.execute("delete from student where id = '%s'" % id)
+        # 提交语句
+        config.mydb.commit()
+    def manage_change(self):
+        mycursor = config.mydb.cursor()
+        # id = self.manage_input_id_2.text()
+        # sql = "INSERT INTO student (id, name, work, tel) VALUES (%s, %s, %s, %s)"
+        #
+        # mycursor.execute("update student set (name=%s , work=%s, tel=%s) where id=%s", [, 5, ])
+        # mycursor.commit()
+        mycursor.execute("update student set name=%s , work=%s, tel=%s where id=%s", [self.register_input_name.text(), self.register_input_work.text(),
+               self.register_input_tel.text(),self.register_input_id.text()])
+        # sql = "update student set (name, work, tel) where id VALUES (%s, %s, %s, %s)"
+        # val = (self.register_input_name.text(), self.register_input_work.text(),
+        #        self.register_input_tel.text(),self.register_input_id.text(), )
+        # mycursor.execute(sql, val)
+        config.mydb.commit()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

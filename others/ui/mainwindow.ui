@@ -179,7 +179,7 @@
           <number>0</number>
          </property>
          <property name="currentIndex">
-          <number>3</number>
+          <number>2</number>
          </property>
          <widget class="QWidget" name="main_index">
           <layout class="QGridLayout" name="gridLayout">
@@ -325,13 +325,6 @@
               </property>
              </widget>
             </item>
-            <item>
-             <widget class="QPushButton" name="register_video_pushbutton">
-              <property name="text">
-               <string>确认照片</string>
-              </property>
-             </widget>
-            </item>
            </layout>
           </widget>
           <widget class="QFrame" name="frame">
@@ -357,15 +350,17 @@
               </property>
              </widget>
             </item>
+            <item row="3" column="1">
+             <widget class="QLineEdit" name="register_input_tel"/>
+            </item>
             <item row="0" column="1">
              <widget class="QLineEdit" name="register_input_id"/>
             </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="register_label_tel">
-              <property name="text">
-               <string>tel</string>
-              </property>
-             </widget>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="register_input_name"/>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="register_input_work"/>
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="register_label_name">
@@ -374,9 +369,6 @@
               </property>
              </widget>
             </item>
-            <item row="3" column="1">
-             <widget class="QLineEdit" name="register_input_tel"/>
-            </item>
             <item row="2" column="0">
              <widget class="QLabel" name="register_label_work">
               <property name="text">
@@ -384,20 +376,53 @@
               </property>
              </widget>
             </item>
-            <item row="1" column="1">
-             <widget class="QLineEdit" name="register_input_name"/>
-            </item>
-            <item row="2" column="1">
-             <widget class="QLineEdit" name="register_input_work"/>
-            </item>
-            <item row="4" column="1">
-             <widget class="QPushButton" name="register_pushButton">
+            <item row="3" column="0">
+             <widget class="QLabel" name="register_label_tel">
               <property name="text">
-               <string>确认</string>
+               <string>tel</string>
               </property>
              </widget>
             </item>
            </layout>
+          </widget>
+          <widget class="QPushButton" name="register_video_pushbutton">
+           <property name="geometry">
+            <rect>
+             <x>390</x>
+             <y>530</y>
+             <width>201</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>确认照片</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="register_pushButton">
+           <property name="geometry">
+            <rect>
+             <x>100</x>
+             <y>530</y>
+             <width>201</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>确认</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="register_train_pushbuttoon">
+           <property name="geometry">
+            <rect>
+             <x>680</x>
+             <y>530</y>
+             <width>191</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>训练模型</string>
+           </property>
           </widget>
          </widget>
          <widget class="QWidget" name="main_search">
