@@ -21,8 +21,11 @@ class myMainWindow(Ui_MainWindow,QMainWindow):
         self.setupUi(self)
         #实现页面跳转
         self.menu_index.clicked.connect(self.stack_index)
+        self.menu_password.clicked.connect(self.stack_passwd)
         self.menu_register.clicked.connect(self.stack_register)
-        self.menu_search.clicked.connect(self.stack_serch)
+        self.menu_search.clicked.connect(self.stack_search)
+        self.menu_manage.clicked.connect(self.stack_manage)
+        self.menu_setting.clicked.connect(self.stack_setting)
         #识别门禁槽函数
         self.menu_index.clicked.connect(self.index_face)
         #用户注册页面槽函数
@@ -37,10 +40,16 @@ class myMainWindow(Ui_MainWindow,QMainWindow):
 
     def stack_index(self):
         self.stackedWidget.setCurrentIndex(0)
-    def stack_register(self):
+    def stack_passwd(self):
         self.stackedWidget.setCurrentIndex(1)
-    def stack_serch(self):
+    def stack_register(self):
         self.stackedWidget.setCurrentIndex(2)
+    def stack_search(self):
+        self.stackedWidget.setCurrentIndex(3)
+    def stack_manage(self):
+        self.stackedWidget.setCurrentIndex(4)
+    def stack_setting(self):
+        self.stackedWidget.setCurrentIndex(5)
    #####################################################
    #################人脸识别界面##########################
     def index_face(self):
