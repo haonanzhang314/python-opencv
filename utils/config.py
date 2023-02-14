@@ -1,4 +1,5 @@
 import mysql.connector
+from mainwindow import Ui_MainWindow
 # 数据库账户密码
 mydb = mysql.connector.connect(
     host="124.221.206.185",
@@ -6,6 +7,7 @@ mydb = mysql.connector.connect(
     passwd="qwe123ASD",
     database='face'
 )
+
 
 cfg_mnet = {
     'name'              : 'mobilenet0.25',

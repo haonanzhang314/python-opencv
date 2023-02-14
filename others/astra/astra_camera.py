@@ -26,7 +26,7 @@ if __name__ == "__main__":
     #深度窗口
     cv2.namedWindow('depth')
     #彩色窗口
-    cv2.namedWindow('color')
+    #cv2.namedWindow('color')
     #红外窗口
     #cv2.namedWindow('ir')
 
@@ -58,20 +58,20 @@ if __name__ == "__main__":
         '假设我们需要让我们的深度摄像头感兴趣的距离范围有差别地显示，那么我们就需要确定一个合适的alpha值，公式为：有效距离*alpha=255，' \
         '假设我们想让深度摄像头8m距离内的深度被显示，>8m的与8m的颜色显示相同，那么alpha=255/(8*10^3)≈0.03，' \
         '假设我们想让深度摄像头6m距离内的深度被显示，>6m的与6m的颜色显示相同，那么alpha=255/(6*10^3)≈0.0425'
-        dim_gray = cv2.convertScaleAbs(dpt, alpha=0.17)
+        dim_gray = cv2.convertScaleAbs(dpt, alpha=0.5)
         # 对深度图像进行一种图像的渲染，目前有11种渲染方式，大家可以逐一去试下
-        depth_colormap = cv2.applyColorMap(dim_gray, 2)  # 有0~11种渲染的模式
+        depth_colormap = cv2.applyColorMap(dim_gray, 10)  # 有0~11种渲染的模式
         cv2.imshow('depth', depth_colormap)
-
-    # 显示RGB图像
-        cframe = color_stream.read_frame()
-        cframe_data = np.array(cframe.get_buffer_as_triplet()).reshape([480, 640, 3])
-        R = cframe_data[:, :, 0]
-        G = cframe_data[:, :, 1]
-        B = cframe_data[:, :, 2]
-        cframe_data = np.transpose(np.array([B, G, R]), [1, 2, 0])
-        # print(cframe_data.shape)
-        cv2.imshow('color', cframe_data)
+    #
+    # # 显示RGB图像
+    #     cframe = color_stream.read_frame()
+    #     cframe_data = np.array(cframe.get_buffer_as_triplet()).reshape([480, 640, 3])
+    #     R = cframe_data[:, :, 0]
+    #     G = cframe_data[:, :, 1]
+    #     B = cframe_data[:, :, 2]
+    #     cframe_data = np.transpose(np.array([B, G, R]), [1, 2, 0])
+    #     # print(cframe_data.shape)
+    #     cv2.imshow('color', cframe_data)
 
     # 显示ir图像
     #     iframe = ir_stream.read_frame()
